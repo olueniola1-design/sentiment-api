@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentiment-api-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sentiment-api
+  template:
+    metadata:
+      labels:
+        app: sentiment-api
+    spec:
+      containers:
+      - name: sentiment-api
+        image: olueniola1/sentiment-api:latest
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sentiment-api-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: sentiment-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
