@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from transformers import BertTokenizer, BertForSequenceClassification
 import torch
+import os
 
 app = Flask(__name__)
 MODEL_DIR = './sentiment_model'
@@ -9,7 +10,8 @@ try:
     tokenizer = BertTokenizer.from_pretrained(MODEL_DIR)
     model = BertForSequenceClassification.from_pretrained(MODEL_DIR)
 except Exception as e:
-    print(f"Error loading model: {e}")
+    print(f"CRITICAL ERROR: Could not load model from {os.path.abspath(MODEL_DIR)}")
+    raise e
 
 @app.route('/predict', methods=['POST'])
 def predict():
