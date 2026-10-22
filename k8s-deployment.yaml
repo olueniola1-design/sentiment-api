@@ -14,7 +14,9 @@ spec:
     spec:
       containers:
       - name: sentiment-api
-        image: olueniola1/sentiment-api:latest
+        # Verified registry digest; see model_versioning_report.md before updating.
+        image: olueniola1/sentiment-api@sha256:a64ec8ed3b92d5f154d9c870ffe200aea5779486ad23a7246009c3bc01c8f789
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000
 ---
